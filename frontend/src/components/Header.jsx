@@ -35,7 +35,7 @@ const Header = () => {
               </span>
             </li>
           </Link>
-          <Link to={"/profile"}>
+          <Link to={"/register"}>
             <li className="p-2 rounded-lg transition duration-300 outline hover:bg-white hover:text-[#FF9376] font-semibold shadow-2xl">
               Sign In
             </li>
