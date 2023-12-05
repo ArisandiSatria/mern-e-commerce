@@ -4,7 +4,8 @@ import { useRecoilState } from "recoil";
 import { userState } from "../state/atom/userState";
 
 const Login = () => {
-  const [formData, setFormData] = useRecoilState(userState);
+  const [formData, setFormData] = useState({});
+  const [user, setUser] = useRecoilState(userState)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      setUser(data)
       if (data.success == false) {
         setError(data.message);
         setLoading(false);
