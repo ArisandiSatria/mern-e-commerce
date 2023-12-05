@@ -2,8 +2,12 @@ import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userIsLoggedIn } from "../state/selector/loggedInUser";
 
 const Header = () => {
+  const user = useRecoilValue(userIsLoggedIn)
+  
   return (
     <header className="bg-[#FF9376] shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
@@ -35,10 +39,20 @@ const Header = () => {
               </span>
             </li>
           </Link>
-          <Link to={"/login"}>
-            <li className="p-2 rounded-lg transition duration-300 outline hover:bg-white hover:text-[#FF9376] font-semibold shadow-2xl">
-              Sign In
-            </li>
+          <Link to={"/profile"}>
+            {
+              user ? (
+                <img
+                  className="rounded-full h-7 w-7 object-cover"
+                  src={user.avatar}
+                  alt="profile"
+                />
+              ) : (
+                <li className="p-2 rounded-lg transition duration-300 outline hover:bg-white hover:text-[#FF9376] font-semibold shadow-2xl">
+                  Sign In
+                </li>
+              )
+            }
           </Link>
         </ul>
       </div>
