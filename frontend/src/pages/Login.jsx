@@ -5,7 +5,7 @@ import { userState } from "../state/atom/userState";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
-  const [user, setUser] = useRecoilState(userState)
+  const [user, setUser] = useRecoilState(userState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -30,12 +30,12 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      setUser(data)
       if (data.success == false) {
         setError(data.message);
         setLoading(false);
         return;
       }
+      setUser(data);
       setLoading(false);
       setError(null);
       navigate("/");
@@ -66,10 +66,12 @@ const Login = () => {
           onChange={handleChange}
           required
         />
-        <button disabled={loading} className="bg-[#FF9376] text-white p-3 rounded-lg uppercase hover:opacity-80 transition disabled:opacity-70 font-semibold">
+        <button
+          disabled={loading}
+          className="bg-[#FF9376] text-white p-3 rounded-lg uppercase hover:opacity-80 transition disabled:opacity-70 font-semibold"
+        >
           {loading ? "Loading..." : "Log In"}
         </button>
-        {error && <p className="text-red-500 mt-5">{error}</p>}
       </form>
 
       <div className="flex gap-2 mt-5">
@@ -78,6 +80,7 @@ const Login = () => {
           <span className="text-[#FF9376] hover:underline">Register</span>
         </Link>
       </div>
+      {error && <p className="text-red-500 mt-5">{error}</p>}
     </div>
   );
 };
