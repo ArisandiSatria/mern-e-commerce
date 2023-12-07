@@ -66,7 +66,7 @@ const Login = () => {
           onChange={handleChange}
           required
         />
-        <button className="bg-[#FF9376] text-white p-3 rounded-lg uppercase hover:opacity-80 transition disabled:opacity-70 font-semibold">
+        <button disabled={loading} className="bg-[#FF9376] text-white p-3 rounded-lg uppercase hover:opacity-80 transition disabled:opacity-70 font-semibold">
           {loading ? "Loading..." : "Log In"}
         </button>
         {error && <p className="text-red-500 mt-5">{error}</p>}
