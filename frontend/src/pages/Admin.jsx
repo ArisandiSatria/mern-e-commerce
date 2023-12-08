@@ -39,9 +39,9 @@ const Admin = () => {
             />
 
             <div className="mt-2">
-              <p>
+              <p className="text-white">
                 Hello{" "}
-                <span className="font-semibold">{userData.username}!</span>
+                <span className="font-semibold text-black">{userData.username}!</span>
               </p>
             </div>
           </div>

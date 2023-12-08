@@ -9,7 +9,7 @@ const ProductPanel = () => {
         onClick={() => setNewProduct(!newProduct)}
         className="border border-[#FF9376] rounded-lg p-3 text-[#FF9376] hover:bg-[#FF9376] hover:text-white duration-150"
       >
-        {newProduct ? "New Product" : "Back to All"}
+        {newProduct ? "New Product" : "Back to Products"}
       </button>
 
       {newProduct ? (
@@ -65,6 +65,7 @@ const ProductPanel = () => {
                   placeholder="price"
                   className="border p-3 rounded-lg"
                   id="price"
+                  min="0"
                   required
                 />
               </div>
@@ -75,6 +76,7 @@ const ProductPanel = () => {
                   placeholder="regular price"
                   className="border p-3 rounded-lg"
                   id="regularPrice"
+                  min="0"
                   required
                 />
               </div>
@@ -85,6 +87,8 @@ const ProductPanel = () => {
                   placeholder="quantity"
                   className="border p-3 rounded-lg"
                   id="quantity"
+                  min="0"
+                  max="1000"
                   required
                 />
               </div>
