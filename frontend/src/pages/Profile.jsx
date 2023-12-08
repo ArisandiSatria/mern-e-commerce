@@ -57,34 +57,34 @@ const Profile = () => {
       <div className="my-10">
         <h2 className="mb-5 font-semibold text-xl">History</h2>
         <div className="border rounded-lg overflow-hidden">
-          <table class="w-full text-sm text-left">
-            <thead class="text-xs text-white uppercase bg-[#FF9376]">
+          <table className="w-full text-sm text-left">
+            <thead className="text-xs text-white uppercase bg-[#FF9376]">
               <tr>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Product name
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Quantity
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Category
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Price
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr class="border-b">
+              <tr className="border-b">
                 <th
                   scope="row"
-                  class="px-6 py-4 font-medium whitespace-nowrap "
+                  className="px-6 py-4 font-medium whitespace-nowrap "
                 >
                   null
                 </th>
-                <td class="px-6 py-4">null</td>
-                <td class="px-6 py-4">null</td>
-                <td class="px-6 py-4">null</td>
+                <td className="px-6 py-4">null</td>
+                <td className="px-6 py-4">null</td>
+                <td className="px-6 py-4">null</td>
               </tr>
             </tbody>
           </table>
