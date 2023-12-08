@@ -6,14 +6,14 @@ import { BsClockHistory } from "react-icons/bs";
 
 const Home = () => {
   return (
-    <div className="p-10 px-2 max-w-6xl mx-auto">
+    <div className="flex flex-col p-10 px-2 max-w-6xl mx-auto gap-10">
       <img
         className="center object-contain shadow-lg"
         src={banner}
         alt="banner"
       />
 
-      <div className="flex gap-4 my-5">
+      <div className="flex gap-4">
         <div className="w-xl flex gap-2 rounded-lg shadow-md p-3">
           <FaShippingFast className="text-3xl text-blue-300" />
           <div>
@@ -44,7 +44,11 @@ const Home = () => {
         </div>
       </div>
 
-      <div></div>
+      <div className="text-center">
+        <p className="uppercase text-[#FF9376]">Choose any products</p>
+        <p className="font-semibold text-3xl">Buy Everything with Us</p>
+      </div>
+
     </div>
   );
 };
