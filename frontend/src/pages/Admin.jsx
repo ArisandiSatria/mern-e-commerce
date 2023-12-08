@@ -28,10 +28,10 @@ const Admin = () => {
   };
 
   return (
-    <div className="flex m-10 rounded-lg overflow-hidden h-screen shadow-xl gap-4">
-      <div className="w-lg p-8 bg-[#FF9376] flex flex-col justify-between">
+    <div className="flex max-w-6xl mx-auto m-3 rounded-lg overflow-hidden h-[87vh] shadow-xl gap-4">
+      <div className="w-52 items-center py-8 bg-[#FF9376] flex flex-col justify-between">
         <div className="">
-          <div className="border-b-2 mb-4">
+          <div className="border-b-2 px-5 mb-4">
             <img
               className="rounded-full h-24 w-24 object-cover self-center"
               src={userData.avatar}
@@ -78,7 +78,7 @@ const Admin = () => {
         </button>
       </div>
 
-      <div className="max-w-4xl">
+      <div className="w-full">
         {
           showed == "products" ? <ProductPanel/> : <OrderPanel/>
         }
