@@ -1,7 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ProductPanel = () => {
   const [newProduct, setNewProduct] = useState(true);
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchAllProducts = async () => {
+      try {
+        const res = await fetch("/api/product/all-products");
+        const data = await res.json();
+        if (data.success == false) {
+          console.log(data.message);
+          return;
+        }
+        setAllProducts(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchAllProducts();
+  }, []);
 
   return (
     <div className="p-2">
@@ -13,22 +32,27 @@ const ProductPanel = () => {
       </button>
 
       {newProduct ? (
-        <div className="mt-5">
-          <div className="bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]">
-            <img
-              src=""
-              alt="product image"
-              className="h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300"
-            />
-            <div className="p-3 flex flex-col gap-2 w-full">
-              <p className="text-lg font-semibold text-slate-700 truncate">
-                name
-              </p>
-              <div className="flex items-center gap-1">
-                <p className="text-sm text-gray-600 truncate w-full">price</p>
+        <div className="mt-5 flex flex-wrap gap-4">
+          {allProducts &&
+            allProducts.map((product) => (
+              <div className="bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-[300px]">
+                <img
+                  src=""
+                  alt={product.imageUrls}
+                  className="h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300"
+                />
+                <div className="p-3 flex flex-col gap-2 w-full">
+                  <p className="text-lg font-semibold text-slate-700 truncate">
+                    {product.name}
+                  </p>
+                  <div className="flex items-center gap-1">
+                    <p className="text-sm text-gray-600 truncate w-full">
+                      {product.regularPrice - product.discountPrice}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            ))}
         </div>
       ) : (
         <div className="flex gap-4">

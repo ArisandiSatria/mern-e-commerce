@@ -1,9 +1,11 @@
 import express from "express";
 import { PORT, mongoDBUrl } from "./config.js";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 import authRouter from "./routes/auth.route.js";
-import cookieParser from "cookie-parser";
+import productRouter from './routes/product.route.js'
+
 
 const app = express();
 
@@ -24,6 +26,7 @@ mongoose
   });
 
 app.use("/api/auth", authRouter);
+app.use("/api/product", productRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
