@@ -9,7 +9,7 @@ export const addProduct = async (req, res, next) => {
   }
 };
 
-export const getProduct = async (req, res, next) => {
+export const getAllProducts = async (req, res, next) => {
   try {
     const product = await Product.find({});
     return res.status(200).json(product);

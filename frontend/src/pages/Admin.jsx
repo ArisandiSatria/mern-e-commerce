@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userIsLoggedIn } from "../state/selector/loggedInUser";
-import ProductPanel from "../components/admin/ProductPanel";
+import ProductPanel from "../components/admin/product/ProductPanel";
 import OrderPanel from "../components/admin/OrderPanel";
 import { userState } from "../state/atom/userState";
 
@@ -28,8 +28,8 @@ const Admin = () => {
   };
 
   return (
-    <div className="flex max-w-6xl mx-auto m-3 rounded-lg overflow-hidden h-[87vh] shadow-xl gap-4">
-      <div className="w-52 items-center py-8 bg-[#FF9376] flex flex-col justify-between">
+    <div className="flex max-w-6xl mx-auto my-3 rounded-lg overflow-hidden h-[87vh] shadow-xl gap-4">
+      <div className="w-60 items-center py-8 bg-[#FF9376] flex flex-col justify-between">
         <div className="">
           <div className="border-b-2 px-5 mb-4">
             <img
@@ -40,29 +40,29 @@ const Admin = () => {
 
             <div className="mt-2">
               <p className="text-white">
-                Hello{" "}
-                <span className="font-semibold text-black">{userData.username}!</span>
+                Hello,{" "}
+                <span className="font-semibold text-black">
+                  {userData.username}!
+                </span>
               </p>
             </div>
           </div>
 
           <div className="flex flex-col gap-2">
             <ul className="">
-              <li className="hover:bg-[#fb9e84] duration-150">
-                <button
-                  className="p-2 text-white"
-                  type="button"
-                  onClick={() => setShowed("products")}
-                >
+              <li
+                onClick={() => setShowed("products")}
+                className="hover:bg-[#fb9e84] duration-150 cursor-pointer"
+              >
+                <button className="p-2 text-white" type="button">
                   Products
                 </button>
               </li>
-              <li className="hover:bg-[#fb9e84] duration-150">
-                <button
-                  className="p-2 text-white"
-                  type="button"
-                  onClick={() => setShowed("order")}
-                >
+              <li
+                onClick={() => setShowed("order")}
+                className="hover:bg-[#fb9e84] duration-150 cursor-pointer"
+              >
+                <button className="p-2 text-white" type="button">
                   Order
                 </button>
               </li>
@@ -78,10 +78,8 @@ const Admin = () => {
         </button>
       </div>
 
-      <div className="w-full">
-        {
-          showed == "products" ? <ProductPanel/> : <OrderPanel/>
-        }
+      <div className="w-full overflow-auto">
+        {showed == "products" ? <ProductPanel /> : <OrderPanel />}
       </div>
     </div>
   );

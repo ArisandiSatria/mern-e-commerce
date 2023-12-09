@@ -18,8 +18,7 @@ const App = () => {
       <Route path="/register" element={<Register/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route element={<PrivateRoute />}>
-        <Route path="/profile" element={userData && userData.role == "customer" ? <Profile /> : <Admin />}/>
-      </Route>
+        <Route path="/profile" element={userData && userData.role == "customer" ? <Profile /> : <Admin />}/>      </Route>
     </Routes>
   )
 }
