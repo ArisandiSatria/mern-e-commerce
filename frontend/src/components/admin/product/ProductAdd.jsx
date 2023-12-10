@@ -264,7 +264,7 @@ const ProductAdd = () => {
             ))}
           <button
             disabled={loading || uploading}
-            className="p-3 mt-4 bg-[#FF9376] text-white rounded-lg uppercase hover:placeholder-opacity-95 disabled:opacity-80"
+            className="p-3 mt-4 bg-[#FF9376] hover:bg-[#e67353] text-white rounded-lg uppercase hover:placeholder-opacity-95 disabled:opacity-80"
           >
             {loading ? "Adding..." : "Add new product"}
           </button>

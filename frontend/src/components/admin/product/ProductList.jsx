@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ProductDetail from "./ProductDetail";
 
-const ProductList = ({ onDetailClicked }) => {
+const ProductList = ({ id, onDetailClicked, data }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [detail, setDetail] = useState(false);
+  const [idProduct, setIdProduct] = useState("");
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -24,13 +24,18 @@ const ProductList = ({ onDetailClicked }) => {
   }, []);
 
   onDetailClicked(detail);
+  data(allProducts);
+  id(idProduct);
 
   return (
     <div className="my-5 py-5 flex flex-wrap gap-4 overflow-y-auto h-fit">
       {allProducts &&
         allProducts.map((product) => (
           <div
-            onClick={() => setDetail(true)}
+            onClick={() => {
+              setDetail(true);
+              setIdProduct(product._id)
+            }}
             key={product._id}
             className="bg-white cursor-pointer shadow-md hover:shadow-lg overflow-hidden transition-shadow rounded-lg w-[210px]"
           >

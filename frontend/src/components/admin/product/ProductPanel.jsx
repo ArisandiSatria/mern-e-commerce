@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import ProductAdd from "./ProductAdd.jsx";
 import ProductList from "./ProductList.jsx";
-import ProductDetail from "./ProductDetail.jsx";
+import ProductDetailAdmin from "./ProductDetailAdmin.jsx";
 
 const ProductPanel = () => {
   const [newProduct, setNewProduct] = useState(true);
   const [detailClicked, setDetailClicked] = useState(false);
+  const [productData, setProductData] = useState([])
+  const [selectedId, setSelectedId] = useState("")
 
   return (
     <div className="p-2">
@@ -15,7 +17,7 @@ const ProductPanel = () => {
           setNewProduct(detailClicked && newProduct ? newProduct : !newProduct);
           setDetailClicked(!detailClicked);
         }}
-        className="border border-[#FF9376] rounded-lg p-3 text-[#FF9376] hover:bg-[#FF9376] hover:text-white duration-150"
+        className="border bg-[#FF9376] rounded-lg p-3 text-white hover:bg-[#e67353] hover:text-white duration-150"
       >
         {newProduct && !detailClicked ? "New Product" : "Back to Products"}
       </button>
@@ -23,9 +25,9 @@ const ProductPanel = () => {
       {!newProduct ? (
         <ProductAdd />
       ) : !detailClicked ? (
-        <ProductList onDetailClicked={setDetailClicked} />
+        <ProductList onDetailClicked={setDetailClicked} id={setSelectedId} data={setProductData} />
       ) : (
-        <ProductDetail />
+        <ProductDetailAdmin dataProduct={productData} id={selectedId}/>
       )}
     </div>
   );
