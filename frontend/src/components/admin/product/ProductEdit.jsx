@@ -7,7 +7,7 @@ import {
 } from "firebase/storage";
 import { app } from "../../../firebase.js";
 
-const ProductEdit = ({id, product}) => {
+const ProductEdit = ({ id, product }) => {
   const [files, setFiles] = useState([]);
   const [uploadImageError, setUploadImageError] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -24,14 +24,15 @@ const ProductEdit = ({id, product}) => {
   });
 
   useEffect(() => {
-    setData(product)
-  }, [id])
+    setData(product);
+  }, [id]);
 
   const handleChange = (e) => {
     if (
       e.target.type == "number" ||
       e.target.type == "text" ||
-      e.target.type == "textarea"
+      e.target.type == "textarea" ||
+      e.target.type == "select-one"
     ) {
       setData({
         ...data,
@@ -101,30 +102,33 @@ const ProductEdit = ({id, product}) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      if (data.imageUrls.length < 1) return setError("You must upload at least 1 image!")
-      if (+data.regularPrice < +data.discountPrice) return setError("Discount price must be lower than regular price")
-      setLoading(true)
-      setError(false)
+      if (data.imageUrls.length < 1)
+        return setError("You must upload at least 1 image!");
+      if (+data.regularPrice < +data.discountPrice)
+        return setError("Discount price must be lower than regular price");
+      setLoading(true);
+      setError(false);
       const res = await fetch(`/api/product/edit-product/${id}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
-      })
-      const dataRes = await res.json()
-      setLoading(false)
+        body: JSON.stringify(data),
+      });
+      const dataRes = await res.json();
+      setLoading(false);
+      console.log(dataRes);
       if (dataRes.success == false) {
-        setError(dataRes.message)
+        setError(dataRes.message);
       }
-      window.location.reload()
+      // window.location.reload()
     } catch (error) {
-      setError(error.message)
-      setLoading(false)
+      setError(error.message);
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="flex gap-4">
@@ -136,14 +140,14 @@ const ProductEdit = ({id, product}) => {
           <div className="flex flex-col gap-2">
             <label htmlFor="name">Name:</label>
             <input
-                type="text"
-                placeholder="Name"
-                className="border p-3 rounded-lg"
-                id="name"
-                required
-                onChange={handleChange}
-                defaultValue={data?.name}
-              />
+              type="text"
+              placeholder="Name"
+              className="border p-3 rounded-lg"
+              id="name"
+              required
+              onChange={handleChange}
+              defaultValue={data?.name}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="category">Category:</label>
@@ -152,7 +156,7 @@ const ProductEdit = ({id, product}) => {
               id="category"
               className="p-3 rounded-lg border"
               onChange={handleChange}
-              value={data?.category}
+              Value={data?.category}
             >
               <option value="Food & Beverages">Food & Beverages</option>
               <option value="Sport">Sport</option>

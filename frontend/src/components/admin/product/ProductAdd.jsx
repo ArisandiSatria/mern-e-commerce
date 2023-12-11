@@ -6,7 +6,6 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../../../firebase.js";
-import { useNavigate } from "react-router-dom";
 
 const ProductAdd = () => {
   const [files, setFiles] = useState([]);
@@ -17,19 +16,19 @@ const ProductAdd = () => {
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
-    category: "diet",
+    category: "",
     description: "",
     quantity: 0,
     regularPrice: 0,
     discountPrice: 0,
   });
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     if (
       e.target.type == "number" ||
       e.target.type == "text" ||
-      e.target.type == "textarea"
+      e.target.type == "textarea" ||
+      e.target.type == "select-one"
     ) {
       setFormData({
         ...formData,
@@ -100,7 +99,6 @@ const ProductAdd = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       if (formData.imageUrls.length < 1)
         return setError("You must upload at least 1 image!");
@@ -120,8 +118,7 @@ const ProductAdd = () => {
       if (data.success == false) {
         setError(data.message);
       }
-      console.log("test");
-      navigate(`/home`);
+      window.location.reload();
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -157,13 +154,12 @@ const ProductAdd = () => {
                 id="category"
                 className="p-3 rounded-lg border"
                 onChange={handleChange}
-                value={formData.category}
               >
-                <option value="diet">Food & Beverages</option>
-                <option value="sport">Sport</option>
-                <option value="electronic">Electronic</option>
-                <option value="cloth">Clothing</option>
-                <option value="medicine">Medicine</option>
+                <option value="Food & Beverages">Food & Beverages</option>
+                <option value="Sport">Sport</option>
+                <option value="Electronic">Electronic</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Medicine">Medicine</option>
               </select>
             </div>
             <div className="flex flex-col gap-2">

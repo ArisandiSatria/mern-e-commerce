@@ -16,7 +16,7 @@ const ProductDetailPage = ({product}) => {
               onClick={() => setSelectedImage(image)}
               src={image}
               alt="product image"
-              className="w-1/12 cursor-pointer object-cover rounded-lg overflow-hidden"
+              className="w-1/12 h-full cursor-pointer object-contain rounded-lg overflow-hidden"
             />
           ))}
         </div>

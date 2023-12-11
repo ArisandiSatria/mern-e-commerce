@@ -56,7 +56,7 @@ const ProductList = ({ id, onDetailClicked, data }) => {
                   <p className="text-sm text-gray-600 truncate w-full">
                     Rp{" "}
                     {(
-                      product.regularPrice - product.discountPrice
+                      +product.regularPrice - +product.discountPrice
                     ).toLocaleString("en-US")}
                   </p>
                 </div>
