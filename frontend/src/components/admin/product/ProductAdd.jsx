@@ -6,7 +6,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../../../firebase.js";
-import { useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const ProductAdd = () => {
   const [files, setFiles] = useState([]);
@@ -23,7 +23,7 @@ const ProductAdd = () => {
     regularPrice: 0,
     discountPrice: 0,
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     if (
@@ -99,179 +99,186 @@ const ProductAdd = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      if (formData.imageUrls.length < 1) return setError("You must upload at least 1 image!")
-      if (+formData.regularPrice < +formData.discountPrice) return setError("Discount price must be lower than regular price")
-      setLoading(true)
-      setError(false)
+      if (formData.imageUrls.length < 1)
+        return setError("You must upload at least 1 image!");
+      if (+formData.regularPrice < +formData.discountPrice)
+        return setError("Discount price must be lower than regular price");
+      setLoading(true);
+      setError(false);
       const res = await fetch("/api/product/add-product", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
-      })
-      const data = await res.json()
-      setLoading(false)
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      setLoading(false);
       if (data.success == false) {
-        setError(data.message)
+        setError(data.message);
       }
       console.log("test");
-      navigate(`/home`)
+      navigate(`/home`);
     } catch (error) {
-      setError(error.message)
-      setLoading(false)
+      setError(error.message);
+      setLoading(false);
     }
-  }
+  };
   return (
-    <div className="flex gap-4">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col sm:flex-row gap-4 mt-5 w-full"
-      >
-        <div className="flex flex-col gap-4 flex-1">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              placeholder="Name"
-              className="border p-3 rounded-lg"
-              id="name"
-              required
-              onChange={handleChange}
-              value={formData.name}
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="category">Category:</label>
-            <select
-              name="category"
-              id="category"
-              className="p-3 rounded-lg border"
-              onChange={handleChange}
-              value={formData.category}
-            >
-              <option value="diet">Food & Beverages</option>
-              <option value="sport">Sport</option>
-              <option value="electronic">Electronic</option>
-              <option value="cloth">Clothing</option>
-              <option value="medicine">Medicine</option>
-            </select>
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="price">Discount Price:</label>
-            <input
-              type="number"
-              placeholder="discount price"
-              className="border p-3 rounded-lg"
-              id="discountPrice"
-              min="0"
-              required
-              onChange={handleChange}
-              value={formData.discountPrice}
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="regularPrice">Regular Price:</label>
-            <input
-              type="number"
-              placeholder="regular price"
-              className="border p-3 rounded-lg"
-              id="regularPrice"
-              min="0"
-              required
-              onChange={handleChange}
-              value={formData.regularPrice}
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="quantity">Quantity:</label>
-            <input
-              type="number"
-              placeholder="quantity"
-              className="border p-3 rounded-lg"
-              id="quantity"
-              min="0"
-              max="1000"
-              required
-              onChange={handleChange}
-              value={formData.quantity}
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="description">Description:</label>
-            <textarea
-              className="border p-3 rounded-lg"
-              type="text"
-              placeholder="description"
-              id="description"
-              required
-              onChange={handleChange}
-              value={formData.description}
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col flex-1 gap-4">
-          <p className="font-semibold">
-            Images:
-            <span className="font-normal text-gray-600 ml-2">
-              The first image will be the cover (max 6)
-            </span>
-          </p>
-          <div className="flex gap-4">
-            <input
-              onChange={(e) => setFiles(e.target.files)}
-              className="p-3 border boder-gray-300 rounded w-full"
-              type="file"
-              id="images"
-              accept="images/*"
-              multiple
-            />
-            <button
-              disabled={loading}
-              onClick={handleImageSubmit}
-              type="button"
-              className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
-            >
-              {uploading ? "Uploading..." : "Upload"}
-            </button>
-          </div>
-          <p className="text-red-700 text-sm">
-            {uploadImageError && uploadImageError}
-          </p>
-          {formData.imageUrls.length > 0 &&
-            formData.imageUrls.map((url, index) => (
-              <div
-                key={url}
-                className="flex justify-between p-3 border items-center"
+    <>
+      <div className="flex gap-2 justify-between my-6 border-b-4 border-b-[#FF9376]">
+        <p className="text-3xl font-semibold mb-6">Add Product</p>
+      </div>
+      <div className="flex gap-4">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col sm:flex-row gap-4 mt-5 w-full"
+        >
+          <div className="flex flex-col gap-4 flex-1">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="name">Name:</label>
+              <input
+                type="text"
+                placeholder="Name"
+                className="border p-3 rounded-lg"
+                id="name"
+                required
+                onChange={handleChange}
+                value={formData.name}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="category">Category:</label>
+              <select
+                name="category"
+                id="category"
+                className="p-3 rounded-lg border"
+                onChange={handleChange}
+                value={formData.category}
               >
-                <img
-                  src={url}
-                  alt="listing image"
-                  className="w-20 h-20 object-contain rounded-lg"
-                />
-                <button
-                  type="button"
-                  onClick={() => handleRemoveImage(index)}
-                  className="p-3 text-red-700 rounded-lg uppercase hover:opacity-75"
+                <option value="diet">Food & Beverages</option>
+                <option value="sport">Sport</option>
+                <option value="electronic">Electronic</option>
+                <option value="cloth">Clothing</option>
+                <option value="medicine">Medicine</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="price">Discount Price:</label>
+              <input
+                type="number"
+                placeholder="discount price"
+                className="border p-3 rounded-lg"
+                id="discountPrice"
+                min="0"
+                required
+                onChange={handleChange}
+                value={formData.discountPrice}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="regularPrice">Regular Price:</label>
+              <input
+                type="number"
+                placeholder="regular price"
+                className="border p-3 rounded-lg"
+                id="regularPrice"
+                min="0"
+                required
+                onChange={handleChange}
+                value={formData.regularPrice}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="quantity">Quantity:</label>
+              <input
+                type="number"
+                placeholder="quantity"
+                className="border p-3 rounded-lg"
+                id="quantity"
+                min="0"
+                max="1000"
+                required
+                onChange={handleChange}
+                value={formData.quantity}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="description">Description:</label>
+              <textarea
+                className="border p-3 rounded-lg"
+                type="text"
+                placeholder="description"
+                id="description"
+                required
+                onChange={handleChange}
+                value={formData.description}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col flex-1 gap-4">
+            <p className="font-semibold">
+              Images:
+              <span className="font-normal text-gray-600 ml-2">
+                The first image will be the cover (max 6)
+              </span>
+            </p>
+            <div className="flex gap-4">
+              <input
+                onChange={(e) => setFiles(e.target.files)}
+                className="p-3 border boder-gray-300 rounded w-full"
+                type="file"
+                id="images"
+                accept="images/*"
+                multiple
+              />
+              <button
+                disabled={loading}
+                onClick={handleImageSubmit}
+                type="button"
+                className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
+              >
+                {uploading ? "Uploading..." : "Upload"}
+              </button>
+            </div>
+            <p className="text-red-700 text-sm">
+              {uploadImageError && uploadImageError}
+            </p>
+            {formData.imageUrls.length > 0 &&
+              formData.imageUrls.map((url, index) => (
+                <div
+                  key={url}
+                  className="flex justify-between p-3 border items-center"
                 >
-                  Delete
-                </button>
-              </div>
-            ))}
-          <button
-            disabled={loading || uploading}
-            className="p-3 mt-4 bg-[#FF9376] hover:bg-[#e67353] text-white rounded-lg uppercase hover:placeholder-opacity-95 disabled:opacity-80"
-          >
-            {loading ? "Adding..." : "Add new product"}
-          </button>
-          {error && <p className="text-red-700 text-sm">{error}</p>}
-        </div>
-      </form>
-    </div>
+                  <img
+                    src={url}
+                    alt="listing image"
+                    className="w-20 h-20 object-contain rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(index)}
+                    className="p-3 text-red-700 rounded-lg uppercase hover:opacity-75"
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))}
+            <button
+              disabled={loading || uploading}
+              className="p-3 mt-4 bg-[#FF9376] hover:bg-[#e67353] text-white rounded-lg uppercase hover:placeholder-opacity-95 disabled:opacity-80"
+            >
+              {loading ? "Adding..." : "Add new product"}
+            </button>
+            {error && <p className="text-red-700 text-sm">{error}</p>}
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 
