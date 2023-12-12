@@ -4,14 +4,20 @@ import { FaShippingFast, FaOpencart } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
 
-const categories = ["Food & Beverages", "Sport", "Electronic", "Clothing", "Medicine"]
+const categories = [
+  "All",
+  "Food & Beverage",
+  "Sport",
+  "Electronic",
+  "Clothing",
+  "Medicine",
+];
 
 const Home = () => {
   const [product, setProduct] = useState([]);
-  const [categoryProduct, setCategoryProduct] = useState([])
-  const [clicked, setClicked] = useState(null)
+  const [clicked, setClicked] = useState("All");
   const [error, setError] = useState(null);
-  
+
   useLayoutEffect(() => {
     const fetchAllProducts = async () => {
       const res = await fetch("/api/product/all-products");
@@ -20,11 +26,14 @@ const Home = () => {
         setError(data.message);
       }
       setProduct(data);
-      setCategoryProduct(data?.category)
     };
 
     fetchAllProducts();
   }, []);
+
+  const filtered =
+    product &&
+    product.filter((prd) => (clicked != "All" ? prd.category == clicked : prd));
 
   return (
     <div className="flex flex-col p-10 px-2 max-w-6xl mx-auto gap-10">
@@ -71,41 +80,45 @@ const Home = () => {
       </div>
 
       <div className="flex justify-center w-fit mx-auto bg-[#FF9376] rounded-lg overflow-hidden">
-        {
-          categories.map((cate) => (
-            <span onClick={() => setClicked(cate)} className={`text-white text-lg p-2 px-6 cursor-pointer hover:bg-[#e67353] ${clicked == cate ? "bg-[#e67353]" : ""}`}>{cate}</span>
-          ))
-        }
+        {categories.map((cate) => (
+          <span
+            onClick={() => setClicked(cate)}
+            className={`text-white text-lg p-2 px-6 cursor-pointer hover:bg-[#e67353] ${
+              clicked == cate ? "bg-[#e67353]" : ""
+            }`}
+          >
+            {cate}
+          </span>
+        ))}
       </div>
 
-      <div className="flex px-[31px] flex-wrap gap-6">
-        {product &&
-          product.map((product) => (
-            <div
-              key={product._id}
-              className="bg-white cursor-pointer shadow-md hover:shadow-lg overflow-hidden transition-shadow rounded-lg w-[250px]"
-            >
-              <img
-                src={product.imageUrls[0]}
-                alt="product image"
-                className="h-[320px] sm:h-[180px] w-full object-cover hover:scale-105 transition-scale duration-300"
-              />
-              <div className="p-3 flex flex-col gap-2 w-full">
-                <p className="text-lg font-semibold text-slate-700 truncate">
-                  {product.name}
+      <div className="flex px-[31px] flex-wrap gap-6">{
+        filtered.length > 0 ? filtered.map(flt => (
+          <div
+            key={flt._id}
+            className="bg-white cursor-pointer shadow-md hover:shadow-lg overflow-hidden transition-shadow rounded-lg w-[250px]"
+          >
+            <img
+              src={flt.imageUrls[0]}
+              alt="product image"
+              className="h-[320px] sm:h-[180px] w-full object-cover hover:scale-105 transition-scale duration-300"
+            />
+            <div className="p-3 flex flex-col gap-2 w-full">
+              <p className="text-lg font-semibold text-slate-700 truncate">
+                {flt.name}
+              </p>
+              <div className="flex items-center gap-1">
+                <p className="text-sm text-gray-600 truncate w-full">
+                  Rp{" "}
+                  {(
+                    +flt.regularPrice -
+                    +flt.discountPrice
+                  ).toLocaleString("en-US")}
                 </p>
-                <div className="flex items-center gap-1">
-                  <p className="text-sm text-gray-600 truncate w-full">
-                    Rp{" "}
-                    {(
-                      +product.regularPrice - +product.discountPrice
-                    ).toLocaleString("en-US")}
-                  </p>
-                </div>
               </div>
             </div>
-          ))}
-      </div>
+          </div>)) : <p className="text-3xl font-semibold mx-auto my-20">No Data</p>
+      }</div>
     </div>
   );
 };

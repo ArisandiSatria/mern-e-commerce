@@ -155,7 +155,7 @@ const ProductAdd = () => {
                 className="p-3 rounded-lg border"
                 onChange={handleChange}
               >
-                <option value="Food & Beverages">Food & Beverages</option>
+                <option value="Food & Beverage">Food & Beverage</option>
                 <option value="Sport">Sport</option>
                 <option value="Electronic">Electronic</option>
                 <option value="Clothing">Clothing</option>

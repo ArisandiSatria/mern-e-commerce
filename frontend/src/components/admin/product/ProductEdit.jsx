@@ -158,7 +158,7 @@ const ProductEdit = ({ id, product }) => {
               onChange={handleChange}
               Value={data?.category}
             >
-              <option value="Food & Beverages">Food & Beverages</option>
+              <option value="Food & Beverage">Food & Beverage</option>
               <option value="Sport">Sport</option>
               <option value="Electronic">Electronic</option>
               <option value="Clothing">Clothing</option>
