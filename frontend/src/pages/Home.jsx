@@ -1,8 +1,9 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import banner from "../assets/banner.jpg";
 import { FaShippingFast, FaOpencart } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
+import {Link} from 'react-router-dom'
 
 const categories = [
   "All",
@@ -18,7 +19,7 @@ const Home = () => {
   const [clicked, setClicked] = useState("All");
   const [error, setError] = useState(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchAllProducts = async () => {
       const res = await fetch("/api/product/all-products");
       const data = await res.json();
@@ -92,33 +93,39 @@ const Home = () => {
         ))}
       </div>
 
-      <div className="flex px-[31px] flex-wrap gap-6">{
-        filtered.length > 0 ? filtered.map(flt => (
-          <div
-            key={flt._id}
-            className="bg-white cursor-pointer shadow-md hover:shadow-lg overflow-hidden transition-shadow rounded-lg w-[250px]"
-          >
-            <img
-              src={flt.imageUrls[0]}
-              alt="product image"
-              className="h-[320px] sm:h-[180px] w-full object-cover hover:scale-105 transition-scale duration-300"
-            />
-            <div className="p-3 flex flex-col gap-2 w-full">
-              <p className="text-lg font-semibold text-slate-700 truncate">
-                {flt.name}
-              </p>
-              <div className="flex items-center gap-1">
-                <p className="text-sm text-gray-600 truncate w-full">
-                  Rp{" "}
-                  {(
-                    +flt.regularPrice -
-                    +flt.discountPrice
-                  ).toLocaleString("en-US")}
-                </p>
-              </div>
-            </div>
-          </div>)) : <p className="text-3xl font-semibold mx-auto my-20">No Data</p>
-      }</div>
+      <div className="flex px-[31px] flex-wrap gap-6">
+        {filtered.length > 0 ? (
+          filtered.map((flt) => (
+            <Link to={`/product-detail/${flt._id}`}>
+              <div
+                key={flt._id}
+                className="bg-white cursor-pointer shadow-md hover:shadow-lg overflow-hidden transition-shadow rounded-lg w-[250px]"
+              >
+                <img
+                  src={flt.imageUrls[0]}
+                  alt="product image"
+                  className="h-[320px] sm:h-[180px] w-full object-cover hover:scale-105 transition-scale duration-300"
+                />
+                <div className="p-3 flex flex-col gap-2 w-full">
+                  <p className="text-lg font-semibold text-slate-700 truncate">
+                    {flt.name}
+                  </p>
+                  <div className="flex items-center gap-1">
+                    <p className="text-sm text-gray-600 truncate w-full">
+                      Rp{" "}
+                      {(+flt.regularPrice - +flt.discountPrice).toLocaleString(
+                        "en-US"
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>{" "}
+            </Link>
+          ))
+        ) : (
+          <p className="text-3xl font-semibold mx-auto my-20">No Data</p>
+        )}
+      </div>
     </div>
   );
 };

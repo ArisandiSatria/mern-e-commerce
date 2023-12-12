@@ -19,6 +19,15 @@ export const getAllProducts = async (req, res, next) => {
   }
 };
 
+export const getProductDetail = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    return res.status(200).json(product);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteProduct = async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
