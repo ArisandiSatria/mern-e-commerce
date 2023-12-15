@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { orderState } from "../state/atom/orderState";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userIsLoggedIn } from "../state/selector/loggedInUser";
 import { useCart } from "../context/cartContext.jsx";
 
 const ProductDetail = () => {
   const user = useRecoilValue(userIsLoggedIn);
-  const [order, setOrder] = useRecoilState(orderState);
   const [cart, setCart] = useCart()
   const [selectedImage, setSelectedImage] = useState("");
   const [product, setProduct] = useState(null);
@@ -23,7 +21,7 @@ const ProductDetail = () => {
     deliveryStatus: "Packaging",
   });
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const { id } = useParams();
 
@@ -41,7 +39,7 @@ const ProductDetail = () => {
         setProduct(data);
         setFormData({
           ...formData,
-          userRef: user._id,
+          userRef: user.id,
           name: data.name,
           category: data.category,
           price: +data.regularPrice - +data.discountPrice,
@@ -54,7 +52,7 @@ const ProductDetail = () => {
     };
 
     fetchProduct();
-  }, []);
+  }, [id]);
 
   const handleChange = (e) => {
     if (e.target.type == "number") {
@@ -74,9 +72,6 @@ const ProductDetail = () => {
     }
     setError(false)
     setCart([...cart, formData])
-    // console.log(cart);
-    // setOrder(formData)
-    // navigate("/cart")
   };
 
   return (
