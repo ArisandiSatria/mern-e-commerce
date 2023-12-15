@@ -18,6 +18,10 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    imageUrls: {
+      type: Array,
+      required: true,
+    },
     orderQuantity: {
       type: Number,
       required: true,

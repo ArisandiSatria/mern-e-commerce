@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { userIsLoggedIn } from "../state/selector/loggedInUser";
 import { useCart } from "../context/cartContext.jsx";
 
@@ -16,6 +16,7 @@ const ProductDetail = () => {
     name: "",
     category: "",
     price: 0,
+    imageUrls: [],
     orderQuantity: 0,
     paymentStatus: "Pending",
     deliveryStatus: "Packaging",
@@ -39,10 +40,11 @@ const ProductDetail = () => {
         setProduct(data);
         setFormData({
           ...formData,
-          userRef: user.id,
+          userRef: user._id,
           name: data.name,
           category: data.category,
           price: +data.regularPrice - +data.discountPrice,
+          imageUrls: data.imageUrls
         });
         setLoading(false);
       } catch (error) {
@@ -71,7 +73,13 @@ const ProductDetail = () => {
       return;
     }
     setError(false)
-    setCart([...cart, formData])
+    
+    for (let i = 0; i <= cart.length; i++) {
+      if (cart[i].name == formData.name)  {
+        setCart({...cart, [e.target.id]: (+e.target.value + +cart[i].orderQuantity)})
+      }
+      setCart([...cart, formData])
+    }
   };
 
   return (
