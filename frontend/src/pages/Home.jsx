@@ -83,6 +83,7 @@ const Home = () => {
       <div className="flex justify-center w-fit mx-auto bg-[#FF9376] rounded-lg overflow-hidden">
         {categories.map((cate) => (
           <span
+            key={cate}
             onClick={() => setClicked(cate)}
             className={`text-white text-lg p-2 px-6 cursor-pointer hover:bg-[#e67353] ${
               clicked == cate ? "bg-[#e67353]" : ""
@@ -96,9 +97,9 @@ const Home = () => {
       <div className="flex px-[31px] flex-wrap gap-6">
         {filtered.length > 0 ? (
           filtered.map((flt) => (
-            <Link to={`/product-detail/${flt._id}`}>
+            <Link key={flt._id} to={`/product-detail/${flt._id}`}>
               <div
-                key={flt._id}
+                
                 className="bg-white cursor-pointer shadow-md hover:shadow-lg overflow-hidden transition-shadow rounded-lg w-[250px]"
               >
                 <img
