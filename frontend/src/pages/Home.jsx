@@ -1,8 +1,9 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import banner from "../assets/banner.jpg";
 import { FaShippingFast, FaOpencart } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
+import {Link} from 'react-router-dom'
 
 const categories = [
   "All",
@@ -18,7 +19,7 @@ const Home = () => {
   const [clicked, setClicked] = useState("All");
   const [error, setError] = useState(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchAllProducts = async () => {
       const res = await fetch("/api/product/all-products");
       const data = await res.json();
