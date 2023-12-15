@@ -1,12 +1,23 @@
-import React from 'react'
-import { useRecoilValue } from 'recoil'
-import { userOrder } from '../state/selector/orderUser'
+import React from "react";
+import { useCart } from "../context/cartContext";
 
 const Cart = () => {
-  const order = useRecoilValue(userOrder)
+  const [cart] = useCart();
+  console.log(cart[0]);
   return (
-    <div>length: {order.name}</div>
-  )
-}
+    <div>
+      Info:
+      {cart &&
+        cart?.map((product) => (
+          <div>
+            <p>{product?.name}</p>
+            <p>{product?.category}</p>
+            <p>{product?.price}</p>
+            <p>{product?.orderQuantity}</p>
+          </div>
+        ))}
+    </div>
+  );
+};
 
-export default Cart
+export default Cart;
