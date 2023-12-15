@@ -4,17 +4,21 @@ const ProductList = ({ id, onDetailClicked, data }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [detail, setDetail] = useState(false);
   const [idProduct, setIdProduct] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
+        setLoading(true);
         const res = await fetch("/api/product/all-products");
         const data = await res.json();
         if (data.success == false) {
           console.log(data.message);
+          setLoading(false);
           return;
         }
         setAllProducts(data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -33,7 +37,10 @@ const ProductList = ({ id, onDetailClicked, data }) => {
         <p className="text-3xl font-semibold mb-6">List Product</p>
       </div>
       <div className="my-5 py-5 flex flex-wrap gap-4 overflow-y-auto h-fit">
-        {allProducts &&
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          allProducts &&
           allProducts.map((product) => (
             <div
               onClick={() => {
@@ -62,7 +69,8 @@ const ProductList = ({ id, onDetailClicked, data }) => {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        )}
       </div>
     </>
   );
