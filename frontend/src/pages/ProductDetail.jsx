@@ -73,16 +73,7 @@ const ProductDetail = () => {
       return;
     }
     setError(false);
-
-    for (let i = 0; i <= cart.length; i++) {
-      if (cart[i].name == formData.name) {
-        setCart({
-          ...cart,
-          [e.target.id]: +e.target.value + +cart[i].orderQuantity,
-        });
-      }
-      setCart([...cart, formData]);
-    }
+    setCart([...cart, formData]);
   };
 
   return (

@@ -24,19 +24,6 @@ const Cart = () => {
     return total.toLocaleString("en-US");
   };
 
-  const mergedArr = cart.reduce((acc, curr) => {
-    const index = acc.findIndex((item) => item.name === curr.name);
-    if (index === -1) {
-      acc.push(curr);
-    } else {
-      acc[index].orderQuantity =
-        parseInt(acc[index].orderQuantity) + parseInt(curr.orderQuantity);
-    }
-    return acc;
-  }, []);
-  
-  console.log(mergedArr);
-
   return (
     <div className="flex flex-col p-10 px-2 max-w-6xl mx-auto gap-5">
       {cart.length == 0 ? (
@@ -47,8 +34,8 @@ const Cart = () => {
         <>
           <h3 className="text-3xl font-semibold">Order: </h3>
           <div className="flex gap-10">
-            <div className="max-w-3xl flex flex-col gap-2">
-              {mergedArr.map((product, index) => (
+            <div className="w-[600px] flex flex-col gap-2">
+              {cart && cart?.map((product, index) => (
                 <div
                   key={index}
                   className="flex border-2 gap-10 p-6 rounded-lg items-center"
@@ -65,7 +52,7 @@ const Cart = () => {
                     <button
                       onClick={() => handleRemove(product.name)}
                       type="button"
-                      className="bg-red-700 rounded-lg p-3 text-white mb-3 hover:bg-red-800 duration-150"
+                      className="bg-red-700 w-fit rounded-lg p-3 text-white mb-3 hover:bg-red-800 duration-150"
                     >
                       Remove
                     </button>
